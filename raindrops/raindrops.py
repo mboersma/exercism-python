@@ -15,7 +15,4 @@ def raindrops(number):
     if number % 7 == 0:
         drops += "Plong"
 
-    if not drops:
-        drops = str(number)
-
-    return drops
+    return drops or str(number)
