@@ -8,10 +8,7 @@ class Matrix(object):
     """A 2-d matrix constructed from a string of numbers."""
 
     def __init__(self, matrix_string):
-        self._matrix = []
-        for line in matrix_string.splitlines():
-            row = [int(n) for n in line.split()]
-            self._matrix.append(row)
+        self._matrix = [[int(i) for i in row.split()] for row in matrix_string.splitlines()]
 
     def row(self, index):
         """Return the matrix row at the given 1-based index."""
