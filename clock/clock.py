@@ -1,16 +1,12 @@
 """Implements a clock that handles times without dates."""
 
 
-HOURS_PER_DAY = 24
-MINUTES_PER_HOUR = 60
-
-
 class Clock(object):
     """A simple clock that supports addition, subtraction, and equality."""
 
     def __init__(self, hour, minute):
-        self.hour = hour
-        self._rationalize(minute)
+        minutes = (hour * 60 + minute) % (24 * 60)
+        self.hour, self.minute = divmod(minutes, 60)
 
     def __repr__(self):
         return "{:02d}:{:02d}".format(self.hour, self.minute)
@@ -19,13 +15,7 @@ class Clock(object):
         return self.hour == other.hour and self.minute == other.minute
 
     def __add__(self, minutes):
-        self._rationalize(self.minute + minutes)
-        return self
+        return Clock(self.hour, self.minute + minutes)
 
     def __sub__(self, minutes):
-        self._rationalize(self.minute - minutes)
-        return self
-
-    def _rationalize(self, minutes):
-        quotient, self.minute = divmod(minutes, MINUTES_PER_HOUR)
-        self.hour = (self.hour + quotient) % HOURS_PER_DAY
+        return Clock(self.hour, self.minute - minutes)
